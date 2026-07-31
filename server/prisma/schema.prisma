@@ -11,3 +11,20 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Link {
+  id        String   @id @default(uuid())
+  slug      String   @unique
+  targetUrl String
+  clicks    Click[]
+  createdAt DateTime @default(now())
+}
+
+model Click {
+  id        String   @id @default(uuid())
+  linkId    String
+  link      Link     @relation(fields: [linkId], references: [id])
+  country   String?
+  device    String?
+  clickedAt DateTime @default(now())
+}

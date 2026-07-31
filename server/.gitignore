@@ -3,3 +3,7 @@ node_modules
 .env
 
 /src/generated/prisma
+.claude/
+.windsurf/
+.agents/
+skills-lock.json

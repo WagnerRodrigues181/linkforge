@@ -12,12 +12,18 @@
   "keywords": [],
   "type": "commonjs",
   "dependencies": {
+    "@prisma/client": "^7.9.1",
     "express": "^5.2.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^26.1.2",
+    "prisma": "^7.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "prisma@7.9.1": true,
+    "@prisma/engines@7.9.1": true
   }
 }

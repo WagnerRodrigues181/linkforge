@@ -16,11 +16,27 @@ function isValidUrl(targetUrl: string): boolean {
 
 export class InvalidUrlError extends Error {}
 
+const MAX_SLUG_RETRIES = 3;
+
 export async function createShortLink(targetUrl: string) {
   if (!isValidUrl(targetUrl)) {
     throw new InvalidUrlError('Invalid target URL');
   }
 
-  const slug = generateSlug();
-  return createLink(slug, targetUrl);
+  let attempts = 0;
+
+  while (attempts < MAX_SLUG_RETRIES) {
+    const slug = generateSlug();
+    try {
+      return await createLink(slug, targetUrl);
+    } catch (err: any) {
+      if (err?.code === 'P2002') {
+        attempts++;
+        continue;
+      }
+      throw err;
+    }
+  }
+
+  throw new Error('Could not generate a unique slug after multiple attempts');
 }

@@ -7,8 +7,8 @@ function generateSlug(): string {
 
 function isValidUrl(targetUrl: string): boolean {
   try {
-    new URL(targetUrl);
-    return true;
+    const url = new URL(targetUrl);
+    return url.protocol === 'http:' || url.protocol === 'https:';
   } catch {
     return false;
   }

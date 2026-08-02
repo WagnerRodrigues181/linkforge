@@ -1,8 +1,8 @@
-import { randomBytes } from 'crypto';
+import { nanoid } from 'nanoid';
 import { createLink } from './links.repository';
 
 function generateSlug(): string {
-  return randomBytes(4).toString('hex');
+  return nanoid(6);
 }
 
 export async function createShortLink(targetUrl: string) {

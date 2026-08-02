@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "tsx watch src/main.ts",
     "build": "tsc",
-    "start": "node dist/main.js"
+    "start": "node dist/main.js",
+    "test": "vitest run"
   },
   "keywords": [],
   "type": "commonjs",
@@ -25,7 +26,8 @@
     "@types/pg": "^8.20.3",
     "prisma": "^7.9.1",
     "tsx": "^4.23.1",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
   },
   "allowScripts": {
     "prisma@7.9.1": true,

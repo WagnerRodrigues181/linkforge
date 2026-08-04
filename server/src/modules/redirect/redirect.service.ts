@@ -4,6 +4,7 @@ import { redis } from '../../cache/redis.client';
 const CACHE_TTL_SECONDS = 3600;
 
 export async function resolveSlug(slug: string): Promise<string | null> {
+  const start = performance.now();
   let cached: string | null = null;
 
   try {
@@ -13,6 +14,8 @@ export async function resolveSlug(slug: string): Promise<string | null> {
   }
 
   if (cached) {
+    const elapsed = performance.now() - start;
+    console.log(`[perf] cache HIT for "${slug}" — ${elapsed.toFixed(2)}ms`);
     return cached;
   }
 
@@ -29,6 +32,9 @@ export async function resolveSlug(slug: string): Promise<string | null> {
   } catch (err) {
     console.error('Redis unavailable, skipping cache write:', err);
   }
+
+  const elapsed = performance.now() - start;
+  console.log(`[perf] cache MISS for "${slug}" — ${elapsed.toFixed(2)}ms`);
 
   return link.targetUrl;
 }

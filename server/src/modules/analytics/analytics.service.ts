@@ -22,21 +22,15 @@ export async function getClicksPerDay(linkSlug: string) {
     return null;
   }
 
-  const clicks = await prisma.click.findMany({
-    where: { linkId: link.id },
-    select: { clickedAt: true },
-  });
+  const grouped = await prisma.$queryRaw<{ date: string; count: bigint }[]>`
+    SELECT TO_CHAR("clickedAt", 'YYYY-MM-DD') as date, COUNT(*) as count
+    FROM "Click"
+    WHERE "linkId" = ${link.id}
+    GROUP BY date
+    ORDER BY date ASC
+  `;
 
-  const counts: Record<string, number> = {};
-
-  for (const click of clicks) {
-    const day = click.clickedAt.toISOString().slice(0, 10);
-    counts[day] = (counts[day] || 0) + 1;
-  }
-
-  return Object.entries(counts)
-    .map(([date, count]) => ({ date, count }))
-    .sort((a, b) => a.date.localeCompare(b.date));
+  return grouped.map((row) => ({ date: row.date, count: Number(row.count) }));
 }
 
 export async function getClicksPerDevice(linkSlug: string) {
@@ -46,19 +40,13 @@ export async function getClicksPerDevice(linkSlug: string) {
     return null;
   }
 
-  const clicks = await prisma.click.findMany({
+  const grouped = await prisma.click.groupBy({
+    by: ['device'],
     where: { linkId: link.id },
-    select: { device: true },
+    _count: { device: true },
   });
 
-  const counts: Record<string, number> = {};
-
-  for (const click of clicks) {
-    const device = click.device ?? 'unknown';
-    counts[device] = (counts[device] || 0) + 1;
-  }
-
-  return Object.entries(counts)
-    .map(([device, count]) => ({ device, count }))
+  return grouped
+    .map((row) => ({ device: row.device ?? 'unknown', count: row._count.device }))
     .sort((a, b) => b.count - a.count);
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Layout } from './components/common/Layout';
 import { ShortenForm } from './features/shorten/ShortenForm';
+import { LinkList } from './features/shorten/LinkList';
 import type { Link } from './services/api';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   return (
     <Layout>
       <ShortenForm onLinkCreated={handleLinkCreated} />
+      <LinkList links={links} />
     </Layout>
   );
 }

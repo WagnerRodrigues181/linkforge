@@ -32,7 +32,11 @@ export function LinkList({ links }: LinkListProps) {
           </div>
           <button
             onClick={() => handleCopy(link)}
-            className="text-text-muted hover:text-text shrink-0 text-sm"
+            className={`shrink-0 text-sm px-3 py-1 rounded transition-colors ${
+              copiedId === link.id
+                ? 'bg-accent text-bg'
+                : 'text-text-muted hover:text-text hover:bg-bg'
+            }`}
           >
             {copiedId === link.id ? 'Copied!' : 'Copy'}
           </button>

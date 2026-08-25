@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid';
+import { Prisma } from '../../generated/prisma/client';
 import { createLink } from './links.repository';
 
 function generateSlug(): string {
@@ -29,8 +30,8 @@ export async function createShortLink(targetUrl: string) {
     const slug = generateSlug();
     try {
       return await createLink(slug, targetUrl);
-    } catch (err: any) {
-      if (err?.code === 'P2002') {
+    } catch (err) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2002') {
         attempts++;
         continue;
       }

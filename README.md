@@ -1,5 +1,7 @@
 # LinkForge
 
+![CI](https://github.com/WagnerRodrigues181/linkforge/actions/workflows/ci.yml/badge.svg)
+
 URL shortener with Redis caching and a real-time analytics dashboard.
 
 ## Stack
@@ -8,7 +10,6 @@ URL shortener with Redis caching and a real-time analytics dashboard.
 - Infra: Docker Compose + GitHub Actions
 
 ## Running locally
-
 Prerequisite: Docker and Docker Compose installed.
 
 ```bash

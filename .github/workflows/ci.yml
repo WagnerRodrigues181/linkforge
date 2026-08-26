@@ -24,6 +24,7 @@ jobs:
       - run: npx prisma generate
       - run: npm run lint
       - run: npm test
+      - run: npm run build
 
   client:
     name: Client
@@ -40,3 +41,4 @@ jobs:
           cache-dependency-path: client/package-lock.json
       - run: npm install
       - run: npm run lint
+      - run: npm run build

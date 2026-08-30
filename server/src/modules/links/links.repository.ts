@@ -5,3 +5,7 @@ export async function createLink(slug: string, targetUrl: string) {
     data: { slug, targetUrl },
   });
 }
+
+export async function findLinkBySlug(slug: string) {
+  return prisma.link.findUnique({ where: { slug } });
+}

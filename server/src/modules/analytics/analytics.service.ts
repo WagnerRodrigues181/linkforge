@@ -1,7 +1,8 @@
 import { prisma } from '../../db/prisma.client';
+import { findLinkBySlug } from '../links/links.repository';
 
 export async function recordClick(linkSlug: string, userAgent?: string) {
-  const link = await prisma.link.findUnique({ where: { slug: linkSlug } });
+  const link = await findLinkBySlug(linkSlug);
 
   if (!link) {
     return;
@@ -16,7 +17,7 @@ export async function recordClick(linkSlug: string, userAgent?: string) {
 }
 
 export async function getClicksPerDay(linkSlug: string) {
-  const link = await prisma.link.findUnique({ where: { slug: linkSlug } });
+  const link = await findLinkBySlug(linkSlug);
 
   if (!link) {
     return null;
@@ -34,7 +35,7 @@ export async function getClicksPerDay(linkSlug: string) {
 }
 
 export async function getClicksPerDevice(linkSlug: string) {
-  const link = await prisma.link.findUnique({ where: { slug: linkSlug } });
+  const link = await findLinkBySlug(linkSlug);
 
   if (!link) {
     return null;

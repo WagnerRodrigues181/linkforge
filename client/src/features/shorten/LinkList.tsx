@@ -2,6 +2,8 @@ import { useState } from 'react';
 import type { Link } from '../../services/api';
 import { Dashboard } from '../analytics/Dashboard';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 interface LinkListProps {
   links: Link[];
 }
@@ -11,7 +13,7 @@ export function LinkList({ links }: LinkListProps) {
   const [expandedSlug, setExpandedSlug] = useState<string | null>(null);
 
   async function handleCopy(link: Link) {
-    const shortUrl = `${window.location.origin}/${link.slug}`;
+    const shortUrl = `${API_URL}/${link.slug}`;
     await navigator.clipboard.writeText(shortUrl);
     setCopiedId(link.id);
     setTimeout(() => setCopiedId(null), 2000);

@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/WagnerRodrigues181/linkforge/actions/workflows/ci.yml/badge.svg)
 
-URL shortener with Redis caching and a real-time analytics dashboard.
+LinkForge is a full-stack URL shortener built with Redis, PostgreSQL, and asynchronous analytics. It focuses on practical production concerns such as caching, graceful degradation, database-level aggregation, performance, and maintainable architecture.
 
 ## Live Demo
 
